@@ -2,10 +2,11 @@
     import Button from './lib/Button.svelte';
 </script>
 
-<Button>Fucking button</Button>
+<Button size="small" shadow>
+    <span slot="leftContent">left</span>
+    Button text
+</Button>
 
 <style>
-    button {
-        border: none;
-    }
+
 </style>
