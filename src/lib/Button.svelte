@@ -4,18 +4,26 @@
     // if unspecified, inherits from the root
     export let bgColor = "inherit";
     export let textColor = "inherit";
+    let isLeftHovered;
 </script>
 
-<button 
+<button
+    on:click
     style:--buttonBgColor={bgColor}
     style:--buttonTextColor={textColor}
     class:size-large={size === "large"}
     class:size-small={size==="small"}
     class:shadow
+    {...$$restProps}
 >
-    <div class="left-content">
-        <slot name="leftContent"></slot>
-    </div>
+    {#if $$slots.leftContent}
+        <div class="left-content" 
+            on:mouseenter={() => (isLeftHovered = true)}
+            on:mouseleave={() => (isLeftHovered = false)}
+        >
+            <slot name="leftContent" {isLeftHovered}></slot>
+        </div>
+    {/if}
     <slot>Fallback text</slot>
 </button>
 
@@ -36,6 +44,10 @@
         }
         &.size-small {
             padding: 15px 20px;
+        }
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         &:hover {
             filter: brightness(85%);
